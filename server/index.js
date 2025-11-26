@@ -52,7 +52,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
-const path = require('path');
+//const path = require('path');
 
 
 app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
@@ -68,4 +68,5 @@ app.listen(PORT, async () => {
   console.log(` API disponible en http://localhost:${PORT}/api`);
   await testConnection();
 });
+
 
