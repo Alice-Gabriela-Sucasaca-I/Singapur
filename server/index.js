@@ -52,8 +52,20 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(buildPath, 'index.html'));
 });
 
+const path = require('path');
+
+
+app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
+
+
+
 app.listen(PORT, async () => {
-  console.log(`🔥 Servidor Singapur corriendo en puerto ${PORT}`);
-  console.log(`📌 API disponible en http://localhost:${PORT}/api`);
+  console.log(` Servidor Singapur corriendo en puerto ${PORT}`);
+  console.log(` API disponible en http://localhost:${PORT}/api`);
   await testConnection();
 });
+
