@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
+const path = require('path');
 const { testConnection } = require('./config/database');
 
 const turnoRoutes = require('./routes/turno');
@@ -37,12 +38,22 @@ app.use('/api/empleado-turno', empleadoTurnoRoutes);
 app.use('/api/auth', authRoutes);
 
 app.get('/api/health', (req, res) => {
-  res.json({ message: 'Servidor Singapur funcionando correctamente', status: 'OK' });
+  res.json({
+    message: 'Servidor Singapur funcionando correctamente',
+    status: 'OK'
+  });
+});
+
+const buildPath = path.join(__dirname, '..', 'client', 'build');
+
+app.use(express.static(buildPath));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(buildPath, 'index.html'));
 });
 
 app.listen(PORT, async () => {
-  console.log(` Servidor Singapur corriendo en puerto ${PORT}`);
-  console.log(` API disponible en http://localhost:${PORT}/api`);
+  console.log(`🔥 Servidor Singapur corriendo en puerto ${PORT}`);
+  console.log(`📌 API disponible en http://localhost:${PORT}/api`);
   await testConnection();
 });
-
